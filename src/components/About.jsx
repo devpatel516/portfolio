@@ -9,7 +9,7 @@ const About = () => {
                     <div className="flex flex-col md:flex-row gap-8 items-start">
                         <div className="flex-shrink-0">
                             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#30363d] to-[#161b22] border-2 border-[var(--primary)] flex items-center justify-center shadow-lg overflow-hidden">
-                                <img src="/public/dev.jpeg" className="w-full h-full object-cover" alt="Dev Patel" />
+                                <img src="/dev.jpeg" className="w-full h-full object-cover" alt="Dev Patel" />
                             </div>
                         </div>
                         <div className="flex-1 space-y-6">
