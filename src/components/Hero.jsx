@@ -144,14 +144,14 @@ const Hero = () => {
                     </AnimatePresence>
                 </div>
 
-                <div className="absolute -bottom-12 -right-12 -z-10 opacity-20 dark:opacity-30 blur-[2px] hidden lg:block transform rotate-[-5deg]">
+                {/* <div className="absolute -bottom-12 -right-12 -z-10 opacity-20 dark:opacity-30 blur-[2px] hidden lg:block transform rotate-[-5deg]">
                     <div className="contribution-grid p-4 rounded bg-[#161b22] border border-[#30363d]">
                         <div className="contribution-box level-1"></div><div className="contribution-box level-2"></div><div className="contribution-box level-0"></div><div className="contribution-box level-4"></div><div className="contribution-box level-1"></div>
                         <div className="contribution-box level-3"></div><div className="contribution-box level-1"></div><div className="contribution-box level-0"></div><div className="contribution-box level-2"></div><div className="contribution-box level-3"></div>
                         <div className="contribution-box level-0"></div><div className="contribution-box level-4"></div><div className="contribution-box level-1"></div><div className="contribution-box level-2"></div><div className="contribution-box level-0"></div>
                         <div className="contribution-box level-2"></div><div className="contribution-box level-3"></div><div className="contribution-box level-4"></div><div className="contribution-box level-1"></div><div className="contribution-box level-0"></div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </section>
     );

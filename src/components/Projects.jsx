@@ -17,7 +17,7 @@ const Projects = () => {
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-neon-green transition-colors font-display">
                             BlogSphere
                         </h3>
-                        <span className="material-symbols-outlined text-slate-400 group-hover:text-neon-green transition-colors"><a href="https://github.com/devpatel516/Blog-website">arrow_outward</a></span>
+                        <span className="material-symbols-outlined text-slate-400 group-hover:text-neon-green transition-colors"><a href="https://github.com/devpatel516/Blog-website" target="_blank">arrow_outward</a></span>
                     </div>
                     <p className="text-slate-600 dark:text-github-text-secondary text-base leading-relaxed mb-6 flex-grow">
                         Developed a full-stack blogging platform using React, Node.js, Express.js, and MongoDB with secure JWT-based authentication and refresh tokens. Implemented CRUD operations for blog posts, image uploads via MongoDB GridFS, and a responsive UI optimized for cross-device usage.                    </p>
@@ -34,7 +34,7 @@ const Projects = () => {
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-neon-green transition-colors font-display">
                             Emotion-Based Music Player
                         </h3>
-                        <span className="material-symbols-outlined text-slate-400 group-hover:text-neon-green transition-colors"><a href="https://github.com/devpatel516/Emotion-Based-Music-Recommender">arrow_outward</a></span>
+                        <span className="material-symbols-outlined text-slate-400 group-hover:text-neon-green transition-colors"><a href="https://github.com/devpatel516/Emotion-Based-Music-Recommender" target="_blank">arrow_outward</a></span>
                     </div>
                     <p className="text-slate-600 dark:text-github-text-secondary text-base leading-relaxed mb-6 flex-grow">
                         Built a Streamlit app that recommends music using NLP-driven emotion detection, integrating a Hugging Face transformer model for real-time emotion classification. Implemented an emotion-to-genre mapping pipeline with metadata-driven recommendation logic.
@@ -51,7 +51,7 @@ const Projects = () => {
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-neon-green transition-colors font-display">
                             Movie Recommendation System
                         </h3>
-                        <span className="material-symbols-outlined text-slate-400 group-hover:text-neon-green transition-colors"><a href="https://github.com/devpatel516/Movie-Recommendation-System">arrow_outward</a></span>
+                        <span className="material-symbols-outlined text-slate-400 group-hover:text-neon-green transition-colors"><a href="https://github.com/devpatel516/Movie-Recommendation-System" target="_blank">arrow_outward</a></span>
                     </div>
                     <p className="text-slate-600 dark:text-github-text-secondary text-base leading-relaxed mb-6 flex-grow">
                         Built a content-based movie recommendation system using TF-IDF and cosine similarity with NLP preprocessing. Developed a FastAPI ML inference service, Node.js backend, and a React frontend with autocomplete search, real-time recommendations, and OMDb API integration.
@@ -68,7 +68,7 @@ const Projects = () => {
             <div className="flex justify-center mt-12">
                 <button className="inline-flex items-center gap-2 text-sm font-semibold text-github-text-secondary hover:text-neon-green transition-colors">
                     <span className="material-symbols-outlined text-[18px]">history</span>
-                    <a href='https://github.com/devpatel516?tab=repositories'>View all repositories</a>
+                    <a href='https://github.com/devpatel516?tab=repositories' target="_blank">View all repositories</a>
                 </button>
             </div>
         </section>
