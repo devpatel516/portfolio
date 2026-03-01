@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logos/logo.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Patel - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "var(--primary)",
+            "background-light": "#f6f8f6",
+            "background-dark": "#0d1117",
+            "github-dark-dim": "#161b22",
+            "github-border": "#30363d",
+            "github-text-secondary": "#8b949e",
+            "github-btn-bg": "#21262d",
+            "github-btn-hover": "#30363d",
+            "neon-green": "var(--primary)",
+            "terminal-green": "var(--primary-hover)",
+            "terminal-blue": "#58a6ff",
+            "terminal-purple": "#bc8cff",
+            "terminal-text": "#c9d1d9",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"],
+          },
+          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+          backgroundImage: {
+            'grid-pattern': "linear-gradient(to right, #30363d 1px, transparent 1px), linear-gradient(to bottom, #30363d 1px, transparent 1px)",
+          },
+          boxShadow: {
+            'glow': '0 0 50px -12px var(--primary-glow)',
+          }
+        },
+      },
+    }
+  </script>
+</head>
+
+<body
+  class="bg-[#0d1117] min-h-screen flex flex-col font-display text-slate-100 overflow-x-hidden selection:bg-primary selection:text-[#0d1117]">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
