@@ -7,19 +7,19 @@ const Experience = ({ githubData }) => {
 
     const certificates = [
         {
-            id: 'web-dev',
-            title: "Complete Web Development Course",
-            issuer: "Udemy",
-            instructor: "Hitesh Choudhary",
-            date: "June 29, 2025",
-            image: "/certificates/web-dev.jpg"
+            id: 'mcp',
+            title: "Model Context Protocol",
+            issuer: "Anthropic",
+            instructor: "Anthropic",
+            date: "March 4, 2026",
+            image: "/certificates/mcp.png"
         },
         {
             id: 'agentic-ai',
             title: "Full Stack Generative and Agentic AI with Python",
             issuer: "Udemy",
             instructor: "Hitesh Choudhary, Piyush Garg",
-            date: "Feb 11, 2026",
+            date: "February 11, 2026",
             image: "/certificates/agentic-ai.png"
         },
         {
@@ -29,6 +29,14 @@ const Experience = ({ githubData }) => {
             instructor: "Forage",
             date: "July 2nd, 2025",
             image: "/certificates/deloitte.png"
+        },
+        {
+            id: 'web-dev',
+            title: "Complete Web Development Course",
+            issuer: "Udemy",
+            instructor: "Hitesh Choudhary",
+            date: "June 29, 2025",
+            image: "/certificates/web-dev.jpg"
         }
     ];
 

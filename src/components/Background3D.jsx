@@ -45,7 +45,7 @@ function Starfield(props) {
 
 const Background3D = () => {
     return (
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+        <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
             <Canvas camera={{ position: [0, 0, 1] }}>
                 <Starfield />
             </Canvas>
