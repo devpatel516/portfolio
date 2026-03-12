@@ -1,111 +1,154 @@
 import React from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 const GitHubStats = ({ githubData, username = 'devpatel516' }) => {
-    // If githubData is not yet provided or is structured differently, fallback gracefully
-    if (!githubData) return null;
+  if (!githubData) return null;
+  const { userData, repos, events, loading, error } = githubData;
 
-    const { userData, repos, events, loading, error } = githubData;
-
-    if (loading) {
-        return (
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-6 relative overflow-hidden flex justify-center items-center h-[430px] shadow-lg">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)]"></div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="bg-[#161b22] border border-red-500/30 rounded-xl p-6 relative overflow-hidden h-[430px] flex flex-col items-center justify-center text-center shadow-lg">
-                <span className="material-symbols-outlined text-4xl text-red-400 mb-2">error</span>
-                <p className="text-red-400 font-medium">Failed to load GitHub stats</p>
-                <p className="text-[#8b949e] text-sm mt-1">{error}</p>
-            </div>
-        );
-    }
-    // Get recent commits from events
-    const pushEvents = events.filter(e => e.type === 'PushEvent');
-    const lastActiveRepo = pushEvents.length > 0 ? pushEvents[0].repo.name : 'None recently';
-
+  if (loading) {
     return (
-        <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-6 relative overflow-hidden group hover:border-[var(--primary)]/50 transition-all shadow-lg hover:shadow-glow">
-            <div className="flex items-center justify-between mb-5 border-b border-[#30363d] pb-4">
-                <div className="flex items-center gap-3">
-                    <img src={userData.avatar_url || "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"} alt="GitHub" className="w-10 h-10 rounded-full border border-[#30363d] bg-white" />
-                    <div>
-                        <h4 className="text-lg font-bold text-white leading-tight">{userData.name || username}</h4>
-                        <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-sm text-[#8b949e] hover:text-[var(--primary)] transition-colors">@{userData.login}</a>
-                    </div>
-                </div>
-                <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-[#8b949e] hover:text-[var(--primary)] transition-colors bg-[#0d1117] p-2 rounded-lg border border-[#30363d]">
-                    <span className="material-symbols-outlined text-sm">open_in_new</span>
-                </a>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 mb-5">
-                <div className="bg-[#0d1117] border border-[#30363d] p-3 rounded-lg flex flex-col items-center justify-center">
-                    <span className="text-[#8b949e] text-[10px] uppercase tracking-wider font-semibold mb-1">Public Repos</span>
-                    <span className="text-xl font-bold text-white font-mono">{userData.public_repos}</span>
-                </div>
-                <div className="bg-[#0d1117] border border-[#30363d] p-3 rounded-lg flex flex-col items-center justify-center text-center">
-                    <span className="text-[#8b949e] text-[10px] uppercase tracking-wider font-semibold mb-1">Recent Push</span>
-                    <span className="text-xs font-medium text-[var(--primary)] line-clamp-1 break-all px-1" title={lastActiveRepo}>
-                        {lastActiveRepo.replace(username + '/', '')}
-                    </span>
-                </div>
-            </div>
-
-            <div>
-                <h5 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-sm text-[var(--primary)]">book</span>
-                    Recent Repositories
-                </h5>
-                <div className="space-y-2">
-                    {repos.slice(0, 3).map(repo => (
-                        <div key={repo.id} className="flex flex-col gap-1 p-3 rounded-lg bg-[#0d1117] border border-[#30363d] hover:border-[var(--primary)]/30 transition-colors">
-                            <div className="flex justify-between items-start">
-                                <a href={repo.html_url} target="_blank" rel="noopener noreferrer" className="text-[#58a6ff] hover:underline font-medium text-sm truncate max-w-[75%]">
-                                    {repo.name}
-                                </a>
-                                <div className="flex gap-2 text-xs text-[#8b949e]">
-                                    {repo.stargazers_count > 0 && (
-                                        <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">star</span> {repo.stargazers_count}</span>
-                                    )}
-                                    {repo.forks_count > 0 && (
-                                        <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">fork_right</span> {repo.forks_count}</span>
-                                    )}
-                                </div>
-                            </div>
-                            {repo.description && (
-                                <p className="text-xs text-[#8b949e] line-clamp-1">{repo.description}</p>
-                            )}
-                            {repo.language && (
-                                <div className="flex items-center gap-1.5 mt-1">
-                                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: getLanguageColor(repo.language) }}></span>
-                                    <span className="text-[10px] text-[#8b949e]">{repo.language}</span>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+      <div className="card flex items-center justify-center h-48">
+        <div
+          className="w-6 h-6 border-2 rounded-full animate-spin"
+          style={{ borderColor: 'var(--border-mid)', borderTopColor: 'var(--primary)' }}
+        />
+      </div>
     );
+  }
+
+  if (error) {
+    return (
+      <div className="card flex flex-col items-center justify-center text-center py-10">
+        <span className="material-symbols-outlined text-3xl text-red-400 mb-2">error</span>
+        <p className="font-mono text-xs text-[#7A8899]">{error}</p>
+      </div>
+    );
+  }
+
+  const pushEvents = events.filter(e => e.type === 'PushEvent');
+  const lastActiveRepo = pushEvents.length > 0 ? pushEvents[0].repo.name : '—';
+
+  return (
+    <div className="card overflow-hidden">
+      {/* Header */}
+      <div
+        className="flex items-center justify-between px-4 py-3"
+        style={{ borderBottom: '1px solid #1C242E', background: '#141A22' }}
+      >
+        <div className="flex items-center gap-2.5">
+          <img
+            src={userData.avatar_url}
+            alt="GitHub avatar"
+            className="w-6 h-6 rounded-sm"
+            style={{ border: '1px solid #253040' }}
+          />
+          <div>
+            <p className="font-mono text-xs font-semibold text-[#E8EDF2]">{userData.name || username}</p>
+            <a
+              href={userData.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[10px] text-[#4A5568] hover:text-[var(--primary)] transition-colors"
+            >
+              @{userData.login}
+            </a>
+          </div>
+        </div>
+        <a
+          href={userData.html_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4A5568] hover:text-[var(--primary)] transition-colors"
+          aria-label="View GitHub profile"
+        >
+          <span className="material-symbols-outlined text-[15px]">open_in_new</span>
+        </a>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-px p-0" style={{ borderBottom: '1px solid #1C242E' }}>
+        <div
+          className="flex flex-col items-center justify-center py-3"
+          style={{ borderRight: '1px solid #1C242E' }}
+        >
+          <span className="font-mono text-[10px] text-[#4A5568] uppercase tracking-widest mb-0.5">Repos</span>
+          <span className="font-display font-bold text-xl text-[#E8EDF2]">{userData.public_repos}</span>
+        </div>
+        <div className="flex flex-col items-center justify-center py-3">
+          <span className="font-mono text-[10px] text-[#4A5568] uppercase tracking-widest mb-0.5">Last Push</span>
+          <span
+            className="font-mono text-[10px] font-semibold text-center px-2 line-clamp-1 break-all"
+            style={{ color: 'var(--primary)' }}
+            title={lastActiveRepo}
+          >
+            {lastActiveRepo.replace(`${username}/`, '')}
+          </span>
+        </div>
+      </div>
+
+      {/* Recent repos */}
+      <div className="p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <FaGithub className="text-[#4A5568] text-sm" />
+          <span className="font-mono text-[10px] text-[#4A5568] uppercase tracking-widest">Recent Repositories</span>
+        </div>
+        <div className="flex flex-col gap-2">
+          {repos.slice(0, 3).map(repo => (
+            <div
+              key={repo.id}
+              className="px-3 py-2.5 rounded-sm flex flex-col gap-1 group"
+              style={{ background: '#080C10', border: '1px solid #1C242E' }}
+            >
+              <div className="flex items-start justify-between gap-2">
+                <a
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs font-semibold text-[#7A8899] hover:text-[var(--primary)] transition-colors truncate"
+                >
+                  {repo.name}
+                </a>
+                <div className="flex gap-2 shrink-0 text-[10px] text-[#4A5568]">
+                  {repo.stargazers_count > 0 && (
+                    <span className="flex items-center gap-0.5">
+                      <span className="material-symbols-outlined text-[12px]">star</span>
+                      {repo.stargazers_count}
+                    </span>
+                  )}
+                </div>
+              </div>
+              {repo.description && (
+                <p className="font-mono text-[10px] text-[#4A5568] line-clamp-1">{repo.description}</p>
+              )}
+              {repo.language && (
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: getLanguageColor(repo.language) }}
+                  />
+                  <span className="font-mono text-[9px] text-[#4A5568]">{repo.language}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-// Helper for language colors
 function getLanguageColor(lang) {
-    const colors = {
-        JavaScript: '#f1e05a',
-        Python: '#3572A5',
-        Java: '#b07219',
-        'C++': '#f34b7d',
-        HTML: '#e34c26',
-        CSS: '#563d7c',
-        TypeScript: '#3178c6',
-        Jupyter: '#DA5B0B'
-    };
-    return colors[lang] || '#8b949e';
+  const map = {
+    JavaScript: '#F1E05A',
+    Python: '#3572A5',
+    Java: '#E97226',
+    'C++': '#F34B7D',
+    HTML: '#E34C26',
+    CSS: '#563D7C',
+    TypeScript: '#3178C6',
+    Jupyter: '#DA5B0B',
+  };
+  return map[lang] || '#4A5568';
 }
 
 export default GitHubStats;

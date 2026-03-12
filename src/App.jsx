@@ -74,7 +74,7 @@ function App() {
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothTouch: true }}>
       <Background3D />
-      <div className="relative z-10 flex flex-col min-h-screen font-display text-slate-100 selection:bg-primary selection:text-[#0d1117]">
+      <div className="relative z-10 flex flex-col min-h-screen font-mono text-[#E8EDF2] selection:bg-[var(--primary)] selection:text-[#080C10]">
         <Header />
         <main className="flex-grow flex flex-col overflow-hidden">
           <AnimatePresence mode="wait">

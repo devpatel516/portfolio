@@ -37,7 +37,7 @@ function Starfield(props) {
     return (
         <group ref={groupRef} rotation={[0, 0, Math.PI / 4]}>
             <Points ref={pointsRef} positions={sphere.current} stride={3} frustumCulled={false} {...props}>
-                <PointMaterial transparent color="#3ad454" size={0.005} sizeAttenuation={true} depthWrite={false} />
+                <PointMaterial transparent color="#00FF88" size={0.004} sizeAttenuation={true} depthWrite={false} />
             </Points>
         </group>
     );
@@ -45,7 +45,7 @@ function Starfield(props) {
 
 const Background3D = () => {
     return (
-        <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+        <div className="fixed inset-0 z-0 pointer-events-none opacity-25">
             <Canvas camera={{ position: [0, 0, 1] }}>
                 <Starfield />
             </Canvas>

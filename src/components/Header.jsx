@@ -1,144 +1,175 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-
 import { useColorTheme } from '../context/ColorContext';
 
+const NAV = [
+  { label: 'Home',         path: '/' },
+  { label: 'About',        path: '/about' },
+  { label: 'Projects',     path: '/projects' },
+  { label: 'Skills',       path: '/skills' },
+  { label: 'Achievements', path: '/experience' },
+  { label: 'Contact',      path: '/contact' },
+];
+
+/* Accent swatches for the theme picker */
+const SWATCHES = {
+  green:  '#00FF88',
+  violet: '#A78BFA',
+  amber:  '#F59E0B',
+};
+
 const Header = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const location = useLocation();
-    const { accentColor, setAccentColor } = useColorTheme();
+  const location = useLocation();
+  const { accentColor, setAccentColor } = useColorTheme();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-    const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'About', path: '/about' },
-        { name: 'Projects', path: '/projects' },
-        { name: 'Skills', path: '/skills' },
-        { name: 'Achievements', path: '/experience' },
-        { name: 'Contact', path: '/contact' }
-    ];
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
 
-    const closeMobileMenu = () => setIsMobileMenuOpen(false);
+  useEffect(() => setOpen(false), [location.pathname]);
 
-    return (
-        <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-github-border bg-background-light/80 dark:bg-[#161b22]/80 backdrop-blur-md">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <Link to="/" className="flex items-center gap-3" onClick={closeMobileMenu}>
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm transition-colors duration-300 overflow-hidden">
-                                <img src="/logos/logo.jpg" alt="logo" className="w-full h-full object-cover" />
-                            </div>
-                            <span className="text-lg font-bold tracking-tight font-mono text-slate-900 dark:text-white transition-colors duration-300">dev_patel</span>
-                        </Link>
-                    </div>
+  return (
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#080C10]/95 backdrop-blur-md border-b border-[#1C242E]'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
 
-                    <div className="flex items-center gap-6">
-                        {/* Desktop Navigation */}
-                        <nav className="hidden md:flex items-center gap-8">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.path}
-                                    to={link.path}
-                                    className={`text-sm font-medium transition-colors ${location.pathname === link.path
-                                        ? 'text-[var(--primary)]'
-                                        : 'text-slate-600 dark:text-github-text-secondary hover:text-slate-900 dark:hover:text-white'
-                                        }`}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                        </nav>
+        {/* Logo / wordmark */}
+        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Home">
+          <div className="w-7 h-7 rounded-sm overflow-hidden border border-[#253040] group-hover:border-[var(--primary)] transition-colors flex items-center justify-center">
+            <img src="/logos/logo.jpg" alt="Dev Patel" className="w-full h-full object-cover" />
+          </div>
+          <span
+            className="font-display font-bold text-sm tracking-widest text-[#E8EDF2] group-hover:text-[var(--primary)] transition-colors uppercase"
+          >
+            Dev Patel
+          </span>
+        </Link>
 
-                        {/* Theme Toggle Buttons */}
-                        <div className="hidden sm:flex items-center gap-2 bg-[#161b22] border border-[#30363d] rounded-full px-2 py-1 shadow-inner">
-                            <button
-                                onClick={() => setAccentColor('green')}
-                                className={`w-5 h-5 rounded-full bg-[#39d353] border-2 transition-transform ${accentColor === 'green' ? 'border-white scale-110' : 'border-transparent hover:scale-110'}`}
-                                aria-label="Green Theme"
-                                title="Neon Green"
-                            />
-                            <button
-                                onClick={() => setAccentColor('yellow')}
-                                className={`w-5 h-5 rounded-full bg-[#5d08e4ff] border-2 transition-transform ${accentColor === 'yellow' ? 'border-white scale-110' : 'border-transparent hover:scale-110'}`}
-                                aria-label="Yellow Theme"
-                                title="Mac Yellow"
-                            />
-                            <button
-                                onClick={() => setAccentColor('orange')}
-                                className={`w-5 h-5 rounded-full bg-[#f0883e] border-2 transition-transform ${accentColor === 'orange' ? 'border-white scale-110' : 'border-transparent hover:scale-110'}`}
-                                aria-label="Orange Theme"
-                                title="GitHub Orange"
-                            />
-                        </div>
-                    </div>
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-7" aria-label="Main navigation">
+          {NAV.map(({ label, path }) => (
+            <Link
+              key={path}
+              to={path}
+              className={`nav-link ${location.pathname === path ? 'active' : ''}`}
+              aria-current={location.pathname === path ? 'page' : undefined}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
 
-                    {/* Mobile Menu Toggle */}
+        {/* Right cluster: theme picker + hamburger */}
+        <div className="flex items-center gap-4">
+          {/* Theme swatch picker */}
+          <div
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm border border-[#1C242E] bg-[#0E1318]"
+            role="group"
+            aria-label="Accent color"
+          >
+            {Object.entries(SWATCHES).map(([key, color]) => (
+              <button
+                key={key}
+                onClick={() => setAccentColor(key)}
+                title={`${key} theme`}
+                aria-pressed={accentColor === key}
+                className="w-4 h-4 rounded-full transition-transform"
+                style={{
+                  background: color,
+                  transform: accentColor === key ? 'scale(1.3)' : 'scale(1)',
+                  outline: accentColor === key ? `2px solid ${color}` : 'none',
+                  outlineOffset: '2px',
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-[5px] group"
+            onClick={() => setOpen(v => !v)}
+            aria-expanded={open}
+            aria-label="Toggle menu"
+          >
+            <span
+              className="block h-px w-5 bg-[#7A8899] group-hover:bg-[var(--primary)] transition-all duration-200"
+              style={{ transform: open ? 'rotate(45deg) translateY(6px)' : 'none' }}
+            />
+            <span
+              className="block h-px w-4 bg-[#7A8899] group-hover:bg-[var(--primary)] transition-all duration-200"
+              style={{ opacity: open ? 0 : 1, marginLeft: '-4px' }}
+            />
+            <span
+              className="block h-px w-5 bg-[#7A8899] group-hover:bg-[var(--primary)] transition-all duration-200"
+              style={{ transform: open ? 'rotate(-45deg) translateY(-6px)' : 'none' }}
+            />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            className="md:hidden border-t border-[#1C242E] bg-[#080C10] overflow-hidden"
+            aria-label="Mobile navigation"
+          >
+            <div className="px-5 py-4 flex flex-col gap-1">
+              {NAV.map(({ label, path }) => (
+                <Link
+                  key={path}
+                  to={path}
+                  className={`py-2.5 px-3 text-xs font-mono tracking-widest uppercase transition-colors rounded-sm ${
+                    location.pathname === path
+                      ? 'text-[var(--primary)] bg-[var(--primary-dim)]'
+                      : 'text-[#7A8899] hover:text-[#E8EDF2] hover:bg-[#0E1318]'
+                  }`}
+                  aria-current={location.pathname === path ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              ))}
+
+              {/* Mobile theme picker */}
+              <div className="flex items-center gap-3 mt-4 pt-4 border-t border-[#1C242E]">
+                <span className="text-[11px] text-[#4A5568] uppercase tracking-widest">Accent</span>
+                <div className="flex gap-2">
+                  {Object.entries(SWATCHES).map(([key, color]) => (
                     <button
-                        className="md:hidden flex items-center justify-center p-2 rounded-md text-slate-600 dark:text-github-text-secondary hover:bg-slate-100 dark:hover:bg-[#30363d] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-expanded={isMobileMenuOpen}
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <span className="material-symbols-outlined">
-                            {isMobileMenuOpen ? 'close' : 'menu'}
-                        </span>
-                    </button>
+                      key={key}
+                      onClick={() => setAccentColor(key)}
+                      aria-label={`${key} theme`}
+                      className="w-5 h-5 rounded-full transition-transform"
+                      style={{
+                        background: color,
+                        transform: accentColor === key ? 'scale(1.2)' : 'scale(1)',
+                        outline: accentColor === key ? `2px solid ${color}` : 'none',
+                        outlineOffset: '2px',
+                      }}
+                    />
+                  ))}
                 </div>
+              </div>
             </div>
-
-            {/* Mobile Navigation Dropdown */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="md:hidden border-b border-gray-200 dark:border-github-border bg-background-light dark:bg-[#161b22] overflow-hidden shadow-lg"
-                    >
-                        <nav className="flex flex-col px-4 pt-2 pb-4 space-y-1">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.path}
-                                    to={link.path}
-                                    onClick={closeMobileMenu}
-                                    className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${location.pathname === link.path
-                                        ? 'bg-slate-100 dark:bg-[#30363d] text-[var(--primary)] dark:text-[var(--primary)]'
-                                        : 'text-slate-600 dark:text-github-text-secondary hover:bg-slate-50 dark:hover:bg-[#21262d] hover:text-slate-900 dark:hover:text-white'
-                                        }`}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-
-                            {/* Mobile Theme Toggle */}
-                            <div className="flex items-center justify-between px-3 py-3 mt-4 border-t border-gray-200 dark:border-github-border">
-                                <span className="text-base font-medium text-slate-600 dark:text-github-text-secondary">Theme Color</span>
-                                <div className="flex items-center gap-3 bg-[#161b22] border border-[#30363d] rounded-full px-2 py-1 shadow-inner">
-                                    <button
-                                        onClick={() => { setAccentColor('green'); closeMobileMenu(); }}
-                                        className={`w-6 h-6 rounded-full bg-[#39d353] border-2 transition-transform ${accentColor === 'green' ? 'border-white scale-110' : 'border-transparent hover:scale-110'}`}
-                                        aria-label="Green Theme"
-                                    />
-                                    <button
-                                        onClick={() => { setAccentColor('yellow'); closeMobileMenu(); }}
-                                        className={`w-6 h-6 rounded-full bg-[#5d08e4ff] border-2 transition-transform ${accentColor === 'yellow' ? 'border-white scale-110' : 'border-transparent hover:scale-110'}`}
-                                        aria-label="Yellow Theme"
-                                    />
-                                    <button
-                                        onClick={() => { setAccentColor('orange'); closeMobileMenu(); }}
-                                        className={`w-6 h-6 rounded-full bg-[#f0883e] border-2 transition-transform ${accentColor === 'orange' ? 'border-white scale-110' : 'border-transparent hover:scale-110'}`}
-                                        aria-label="Orange Theme"
-                                    />
-                                </div>
-                            </div>
-                        </nav>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </header>
-    );
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  );
 };
 
 export default Header;
